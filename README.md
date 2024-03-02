@@ -63,3 +63,26 @@ const myArray = [0,1,2,3,4,5,6,7];
     const subscribe2 = observable2.subscribe(v => displayLog(v));
     const subscribe3 = observable3.subscribe(v => displayLog(v));
 ```
+
+## criando Observable com of e range
+
+```bash
+git checkout dev/04-of-and-range
+```
+
+```js
+const source1 = of(1,2,3,4,5,6,7,8,9);
+    const source2 = of(
+        [1,2,3],
+        "Ola Mundo",
+        {comida: "pasto", bebida: "agua"},
+        function myFunction() {
+            return "uma funcao";
+        }
+    );
+    const source3 = range(2, 9);
+    
+    const subscribe1 = source1.subscribe(data => displayLog(data));
+    const subscribe2 = source2.subscribe(data => displayLog(data));
+    const subscribe3 = source3.subscribe(data => displayLog(data));
+```
