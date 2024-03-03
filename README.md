@@ -153,3 +153,26 @@ git checkout dev/07-mapto-map-and-filter
     );
     const subscribe = click$.subscribe(e => { displayLog(e) });
 ```
+
+## operador tap
+
+Mostra uma previa sem alterar o conteudo
+
+```bash
+git checkout dev/08-tap
+```
+
+```js
+    const grid = document.getElementById('grid');
+    const click$ = fromEvent(grid, 'click').pipe(
+        tap(antes => console.log(`antes original ${antes} e ${JSON.stringify(antes)}`)),
+        map(val => [
+            // pega as coordenadas ma grid cada celula tem 50px x 50px
+            Math.floor(val.offsetX/50), 
+            Math.floor(val.offsetY/50)
+        ]),
+        tap(depois => console.log(`depois ${depois}`))
+    );
+
+    const subscription = click$.subscribe(data => displayLog(data));
+```
