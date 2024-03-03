@@ -86,3 +86,22 @@ const source1 = of(1,2,3,4,5,6,7,8,9);
     const subscribe2 = source2.subscribe(data => displayLog(data));
     const subscribe3 = source3.subscribe(data => displayLog(data));
 ```
+
+## criando Observable com interval e controlando com timer
+
+```bash
+git checkout dev/05-interval-and-timer
+```
+
+```js
+    const source1 = interval(500);
+    const subscription1 = source1.subscribe(v => displayLog(v));
+
+    // setTimeout(() => subscription.unsubscribe(), 3000);
+    timer(3000).subscribe(() => subscription1.unsubscribe());
+
+    const source2 = timer(4000, 100);
+    const subscription2 = source2.subscribe(v => displayLog(`2 -- ${v}`));
+    
+    timer(6000).subscribe(() => subscription2.unsubscribe());
+```
