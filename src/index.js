@@ -1,5 +1,5 @@
 //import stuff
-import example from './sandbox';
+import example from './main';
 
 //run stuff
 example();
