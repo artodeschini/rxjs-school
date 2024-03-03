@@ -105,3 +105,25 @@ git checkout dev/05-interval-and-timer
     
     timer(6000).subscribe(() => subscription2.unsubscribe());
 ```
+
+## observando enventos de interface
+
+```bash
+git checkout dev/06-fromevent
+```
+
+```js
+    const acaoBotao = document.getElementById("action-btn");
+
+    const source1 = fromEvent(acaoBotao, "click");
+
+    source1.subscribe(event => {
+        displayLog(`click event at posição (${event.x}, ${event.y})`);
+    });
+
+    const source2 = fromEvent(document, "mousemove");
+
+    source2.subscribe(event => {
+        console.log(event);
+    });
+```
