@@ -4,7 +4,11 @@
 
 [link original](https://github.com/kaikcreator/rxjs-school)
 
-## para executar
+## site oficial
+
+[rxjs](https://rxjs.dev/)
+
+## para executar o projeto com webpack
 
 ```bash
 npm start
