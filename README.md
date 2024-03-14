@@ -202,3 +202,73 @@ export default () => {
     /** end coding */
 }
 ```
+
+## operadores last takeLast e skip
+
+```bash
+git checkout dev/10-last-takelast-skip
+```
+
+```js
+// operador last
+export default () => {
+    /** start coding */
+    const grid = document.getElementById('grid');
+    const click$ = fromEvent(grid, 'click').pipe(
+        map(val => [ 
+            Math.floor(val.offsetX/50), 
+            Math.floor(val.offsetY/50)
+        ]),
+        takeWhile( ([col, row]) => col > 3 ),
+        /tap(v => console.log(`${v} é valido em operador takeWhile`)),
+        // ultimo evento
+        last()
+    );
+
+    const subscription = click$.subscribe(data => displayLog(data));
+
+    /** end coding */
+}
+```
+
+```js
+// operador takeLast
+export default () => {
+    /** start coding */
+    const grid = document.getElementById('grid');
+    const click$ = fromEvent(grid, 'click').pipe(
+        map(val => [ 
+            Math.floor(val.offsetX/50), 
+            Math.floor(val.offsetY/50)
+        ]),
+        takeWhile( ([col, row]) => col > 3 ),
+        tap(v => console.log(`${v} é valido em operador takeWhile`)),
+        // ultimo n envetos
+        takeLast(3) // tres eventos
+    );
+
+    const subscription = click$.subscribe(data => displayLog(data));
+
+    /** end coding */
+}
+```
+
+```js
+// operador skip
+export default () => {
+    /** start coding */
+    const grid = document.getElementById('grid');
+    const click$ = fromEvent(grid, 'click').pipe(
+        map(val => [ 
+            Math.floor(val.offsetX/50), 
+            Math.floor(val.offsetY/50)
+        ]),
+        tap(v => console.log(`${v} coordenada`)),
+        skip(5) // pula 5 eventos
+    );
+
+    const subscription = click$.subscribe(data => displayLog(data));
+
+    /** end coding */
+}
+```
