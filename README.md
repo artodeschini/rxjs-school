@@ -272,3 +272,76 @@ export default () => {
     /** end coding */
 }
 ```
+
+## git checkout dev/11-reduce-scan
+
+The difference is an observable created with `scan` will emit on each source emission, whereas `reduce` will emit `only once` on completion.
+
+```js
+import { displayLog } from './utils';
+import { fromEvent } from 'rxjs';
+import { map, takeWhile, tap, reduce } from 'rxjs/operators';
+
+export default () => {
+    /** start coding */
+    const grid = document.getElementById('grid');
+    const click$ = fromEvent(grid, 'click').pipe(
+        map(val => [ 
+            Math.floor(val.offsetX/50), 
+            Math.floor(val.offsetY/50)
+        ]),
+        takeWhile( ([col, row]) => col != 0 ),
+        tap(val => console.log(`cell: [${val}]`)),
+        /* reduce((acumulados, current) => {
+            return {
+                clicks: acumulados.clicks + 1,
+                cells: [... acumulados.cells, current]
+            }
+        }, 
+        {clicks: 0, cells: []} // na primeira passada o acumulado assume esse objeto
+        ) // fim reduce */
+        scan((acumulados, current) => {
+            return {
+                clicks: acumulados.clicks + 1,
+                cells: [... acumulados.cells, current]
+            }
+        }, 
+        {clicks: 0, cells: []} // na primeira passada o acumulado assume esse objeto
+        ) // fim scan
+    );
+
+    const subscription = click$.subscribe(data => displayLog(`${data.clicks} clicks: ${JSON.stringify(data.cells)}`));
+
+    /** end coding */
+}
+```
+
+## dev/12-startwith-endwidth
+
+Faz algo antes com `startwith` e depois `endwidth` do observeble
+
+```js
+import { displayLog } from './utils';
+import { fromEvent } from 'rxjs';
+import { endWith, map, startWith, takeWhile, tap } from 'rxjs/operators';
+
+export default () => {
+    /** start coding */
+    const grid = document.getElementById('grid');
+    const click$ = fromEvent(grid, 'click').pipe(
+        map(val => [ 
+            Math.floor(val.offsetX/50), 
+            Math.floor(val.offsetY/50)
+        ]),
+        takeWhile( ([col, row]) => col != 0 ),
+        tap(val => console.log(`cell: [${val}]`)),
+        startWith('Grid dimensoes 10 x 10'),
+        endWith("Game fim",  "bye")
+    );
+
+    const subscription = click$.subscribe(data => displayLog(data));
+
+    /** end coding */
+}
+```
+
