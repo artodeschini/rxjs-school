@@ -1,6 +1,6 @@
 import { displayLog } from './utils';
 import { fromEvent } from 'rxjs';
-import { map, takeWhile, tap } from 'rxjs/operators';
+import { map, takeWhile, tap, distinct, distinctUntilChanged } from 'rxjs/operators';
 
 export default () => {
     /** start coding */
@@ -12,8 +12,13 @@ export default () => {
         ]),
         takeWhile( ([col, row]) => col != 0 ),
         tap(val => console.log(`cell: [${val}]`)),
-        map(([col, row]) => col+row),
+        //map(([col, row]) => col+row),
         tap(val => console.log('sum of col + row is:', val)),
+        distinct(([col, row]) => `${col} - ${row}`),
+        /*distinctUntilChanged((c1, c2) =>
+            (c1[0] == c2[0]) && (c1[1] == c2[2])
+        ) */
+
     );
 
     const subscription = click$.subscribe(data => displayLog(data));
